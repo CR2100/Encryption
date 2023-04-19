@@ -12,3 +12,9 @@ It's important to note that padding is not required for all encryption algorithm
 AES-128 is considered roughly equivalent in security to a 3072-bit RSA key.
 AES-192 is considered roughly equivalent in security to a 7680-bit RSA key.
 AES-256 is considered roughly equivalent in security to a 15360-bit RSA key.
+
+based on this new info,
+need to choose these:
+RSA: 3072 bits (approximately equivalent to AES-128)
+AES: 128 bits
+Blowfish: 128 bits (Blowfish can support key sizes up to 448 bits, but 128 bits is considered secure enough and maintains a similar security level as the other two algorithms)
