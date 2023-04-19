@@ -59,11 +59,20 @@ if __name__ == "__main__":
             decryption_times.append([m[3] for m in metrics[extension]])
 
         # Plot the graphs
+#        plot_graph_with_fitted_line(original_sizes, encryption_times, 'Original File Size (bytes)',
+#                   'Encryption Time (s)', f'Encryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
+
+#        plot_graph_with_fitted_line(original_sizes, decryption_times, 'Original File Size (bytes)',
+#                  'Decryption Time (s)', f'Decryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
+
+ #       plot_graph_with_fitted_line(original_sizes, encrypted_sizes, 'Original File Size (bytes)',
+  #                 'Encrypted File Size (bytes)', f'Encrypted File Size vs. Original File Size ({extension.upper()})', colors, algorithms)
+  # Plot the graphs
         plot_graph_with_fitted_line(original_sizes, encryption_times, 'Original File Size (bytes)',
-                   'Encryption Time (s)', f'Encryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
+                   'Encryption Time (s)', f'Encryption Time vs. Original File Size ({extension.upper()})', colors, algorithms, degree=2)
 
         plot_graph_with_fitted_line(original_sizes, decryption_times, 'Original File Size (bytes)',
-                   'Decryption Time (s)', f'Decryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
+                  'Decryption Time (s)', f'Decryption Time vs. Original File Size ({extension.upper()})', colors, algorithms, degree=2)
 
         plot_graph_with_fitted_line(original_sizes, encrypted_sizes, 'Original File Size (bytes)',
-                   'Encrypted File Size (bytes)', f'Encrypted File Size vs. Original File Size ({extension.upper()})', colors, algorithms)
+                  'Encrypted File Size (bytes)', f'Encrypted File Size vs. Original File Size ({extension.upper()})', colors, algorithms, degree=2)
