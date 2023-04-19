@@ -54,9 +54,28 @@ def encrypt_file(filename):
     with open(decrypted_filename, 'wb') as file:
         file.write(decrypted_data)
 
+# ... (the beginning part of the script remains unchanged)
+
+    # Decrypt the data
+    with open(encrypted_filename, 'rb') as file:
+        encrypted_data = file.read()
+
+    iv = encrypted_data[:8]
+    ciphertext = encrypted_data[8:]
+
+    cipher_dec = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+    start_time = time.time()
+    decrypted_data = cipher_dec.decrypt(ciphertext)
+    decryption_time = time.time() - start_time
+
+    # ... (the rest of the script remains unchanged)
+
     # Write the metrics to a file
     with open('Blowfish_encryption_metrics.txt', 'a') as file:
-        file.write(f"{filename}, {initial_size}, {encrypted_size}, {encryption_time}\n")
+        file.write(f"{filename}, {initial_size}, {encrypted_size}, {encryption_time}, {decryption_time}\n")
+
+# ... (the rest of the script remains unchanged)
+
 
 # Define the file extensions to be encrypted
 extensions = ['.pdf', '.txt', '.mp3', '.docx']
