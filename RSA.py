@@ -45,9 +45,36 @@ def encrypt_file_RSA(filename):
         file.write(encrypted_session_key)
         file.write(ciphertext)
 
+# ... (the beginning part of the script remains unchanged)
+
     # write the metrics to a file
     with open('RSA_encryption_metrics.txt', 'a') as file:
         file.write(f"{filename}, {initial_size}, {encrypted_size}, {encryption_time}, ")
+
+    # Decrypt the data
+    cipher_rsa_dec = PKCS1_OAEP.new(key)
+    start_time = time.time()
+    decrypted_session_key = cipher_rsa_dec.decrypt(encrypted_session_key)
+    decryption_time = time.time() - start_time
+
+    cipher_aes_dec = AES.new(decrypted_session_key, AES.MODE_CBC)
+    decrypted_data = cipher_aes_dec.decrypt(ciphertext)
+
+    # remove padding from decrypted data
+    pad_size = decrypted_data[-1]
+    decrypted_data = decrypted_data[:-pad_size]
+
+    # write the decrypted data to a new file
+    decrypted_filename = filename + '.dec'
+    with open(decrypted_filename, 'wb') as file:
+        file.write(decrypted_data)
+
+    # write decryption time to the file
+    with open('RSA_encryption_metrics.txt', 'a') as file:
+        file.write(f"{decryption_time}\n")
+
+# ... (the rest of the script remains unchanged)
+
 
 # define the file extensions to be encrypted
 extensions = ['.pdf', '.txt', '.mp3', '.docx']
