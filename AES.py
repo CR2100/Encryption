@@ -16,6 +16,9 @@ def encrypt_file(filename):
     with open(filename, 'rb') as file:
         data = file.read()
 
+    # get the initial file size
+    initial_size = len(data)
+
     # pad the data so that it is a multiple of the block size
     pad_size = block_size - len(data) % block_size
     data += pad_size.to_bytes(1, 'big') * pad_size
@@ -28,8 +31,7 @@ def encrypt_file(filename):
     ciphertext = cipher.encrypt(data)
     encryption_time = time.time() - start_time
 
-    # get the initial and encrypted file size
-    initial_size = os.path.getsize(filename)
+    # get the encrypted file size
     encrypted_size = len(ciphertext)
 
     # write the encrypted data to a new file
