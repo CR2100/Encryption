@@ -7,7 +7,7 @@ from Crypto.Random import get_random_bytes
 # define the encryption function for each file type
 def encrypt_file_RSA(filename):
     # generate RSA keys
-    key = RSA.generate(2048)
+    key = RSA.generate(3072)
 
     # set the block size for the encryption
     block_size = 16
