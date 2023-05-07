@@ -1,21 +1,22 @@
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-
+# function to read encryption metrics from a file and return them 
 def read_metrics(file_name):
     metrics = {'pdf': [], 'txt': [], 'mp3': [], 'docx': []}
 
+    # open the file and read the metrics
     with open(file_name, 'r') as file:
         for line in file:
             parts = line.strip().split(', ')
             if len(parts) != 5:
                 continue
-
+            # get the extension of the file from the filename
             extension = parts[0].split('.')[-1]
+            # append the metrics
             metrics[extension].append((int(parts[1]), int(parts[2]), float(parts[3]), float(parts[4])))
 
     return metrics
-
 def plot_graph_with_fitted_line(x, y, xlabel, ylabel, title, colors, labels, degree=1):
     for i, data in enumerate(y):
         plt.scatter(x[i], data, color=colors[i], label=labels[i], alpha=0.5)
@@ -23,6 +24,10 @@ def plot_graph_with_fitted_line(x, y, xlabel, ylabel, title, colors, labels, deg
         # Fit a line or curve to the data points
         coefficients = np.polyfit(x[i], data, degree)
         fitted_function = np.poly1d(coefficients)
+
+        # Print the equation of the fitted line or curve
+        equation = f'{labels[i]}: y = ' + ' + '.join([f'{coef:.4f}x^{degree - j}' for j, coef in enumerate(coefficients)])
+        print(equation)
 
         # Generate the x values for the fitted line or curve
         fitted_x = np.linspace(min(x[i]), max(x[i]), 100)
@@ -34,6 +39,7 @@ def plot_graph_with_fitted_line(x, y, xlabel, ylabel, title, colors, labels, deg
     plt.ylabel(ylabel)
     plt.title(title)
     plt.legend()
+    plt.subplots_adjust(bottom=0.2)  # Add whitespace below the graph
     plt.show()
 
 if __name__ == "__main__":
@@ -58,16 +64,7 @@ if __name__ == "__main__":
             encryption_times.append([m[2] for m in metrics[extension]])
             decryption_times.append([m[3] for m in metrics[extension]])
 
-        # Plot the graphs
-#        plot_graph_with_fitted_line(original_sizes, encryption_times, 'Original File Size (bytes)',
-#                   'Encryption Time (s)', f'Encryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
-
-#        plot_graph_with_fitted_line(original_sizes, decryption_times, 'Original File Size (bytes)',
-#                  'Decryption Time (s)', f'Decryption Time vs. Original File Size ({extension.upper()})', colors, algorithms)
-
- #       plot_graph_with_fitted_line(original_sizes, encrypted_sizes, 'Original File Size (bytes)',
-  #                 'Encrypted File Size (bytes)', f'Encrypted File Size vs. Original File Size ({extension.upper()})', colors, algorithms)
-  # Plot the graphs
+ # Plot the graphs
         plot_graph_with_fitted_line(original_sizes, encryption_times, 'Original File Size (bytes)',
                    'Encryption Time (s)', f'Encryption Time vs. Original File Size ({extension.upper()})', colors, algorithms, degree=2)
 
