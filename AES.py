@@ -7,7 +7,7 @@ from Crypto.Random import get_random_bytes
 # define the encryption function for each file type
 def encrypt_file(filename):
     # set the encryption key
-    key = get_random_bytes(16)
+    key = get_random_bytes(16) # this is a 128 bit key
 
     # set the block size for the encryption
     block_size = 16
